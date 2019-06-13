@@ -572,3 +572,37 @@ const char *LidarLiteI2C::get_dev_name()
 {
 	return get_devname();
 }
+
+
+float LidarLiteI2C::_noise_filter(float x, int N)
+{
+	float temp;
+	for (int r=0;r<=(N-2);r++)
+	{
+	  vv[r]=vv[r+1];	
+	}
+	
+	  vv[N-1]= x;
+	for(int bb=0;bb<(N-1);bb++)
+	{
+	  w[bb]=vv[bb];	
+	}
+	  
+	for(int k=0;k<=(N-2);k++)
+	{
+	   for (int q=0;q<=(N-k);q++)
+	   {
+	   	if (w[q]> w[q+1])
+	   	{
+                  temp =w[q];
+                  w[q]=w[q+1];
+                  w[q+1]=temp;
+	   	}
+
+	   }
+	      
+	}
+	    
+	 return w[(N-1)/2]; 
+
+}

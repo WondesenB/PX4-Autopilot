@@ -90,8 +90,8 @@ void PositionEstimator::ModelStatesCallback(const gazebo_msgs::ModelStatesConstP
 	msg_v_l_pos.xy_global = true;
 	msg_v_l_pos.z_global = true;
 	msg_v_l_pos.ref_timestamp = _startup_time;
-	msg_v_l_pos.ref_lat = 47.378301;
-	msg_v_l_pos.ref_lon = 8.538777;
+	msg_v_l_pos.ref_lat = 47.397742;
+	msg_v_l_pos.ref_lon = 8.545594;
 	msg_v_l_pos.ref_alt = 1200.0f;
 
 	msg_v_l_pos.vxy_max = 0.0f;

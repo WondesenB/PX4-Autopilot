@@ -45,7 +45,9 @@ set(config_module_list
 	drivers/tap_esc
 	drivers/vmount
 	modules/sensors
-
+    #++++++++
+    modules/obstacle_avoidance 
+    #++++++++
 	#
 	# System commands
 	#

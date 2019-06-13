@@ -355,9 +355,10 @@ PARAM_DEFINE_INT32(LPE_FAKE_ORIGIN, 0);
  * @min -90
  * @max 90
  * @decimal 8
+ * PNU Drone (35.233031, 129.084005)
  */
 PARAM_DEFINE_FLOAT(LPE_LAT, 47.397742f);
-
+//PARAM_DEFINE_FLOAT(LPE_LAT, 35.233031f);
 /**
  * Local origin longitude for nav w/o GPS
  *
@@ -368,6 +369,7 @@ PARAM_DEFINE_FLOAT(LPE_LAT, 47.397742f);
  * @decimal 8
  */
 PARAM_DEFINE_FLOAT(LPE_LON, 8.545594);
+//PARAM_DEFINE_FLOAT(LPE_LON, 129.084005);
 
 /**
  * Cut frequency for state publication

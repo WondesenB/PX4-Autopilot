@@ -75,7 +75,7 @@ class LidarLiteI2C : public LidarLite, public device::I2C
 {
 public:
 	LidarLiteI2C(int bus, const char *path,
-		     uint8_t rotation = distance_sensor_s::ROTATION_DOWNWARD_FACING,
+		     uint8_t rotation = distance_sensor_s::ROTATION_FORWARD_FACING, //ROTATION_DOWNWARD_FACING,
 		     int address = LL40LS_BASEADDR);
 	virtual ~LidarLiteI2C();
 
@@ -95,6 +95,13 @@ public:
 	void print_registers() override;
 
 	const char *get_dev_name() override;
+
+       //+++++++++++++++++++++++++
+       int const static N=21;
+       float     w[N]={0};
+       float     vv[N]={0};
+       //float     obs_distance;
+      //++++++++++++++++++++++
 
 protected:
 	int         probe() override;
@@ -125,6 +132,9 @@ private:
 	volatile bool       _pause_measurements;
 	uint8_t		_hw_version;
 	uint8_t		_sw_version;
+
+
+
 
 	/**
 	 * LidarLite specific transfer function. This is needed
@@ -175,6 +185,10 @@ private:
 	* @param arg        Instance pointer for the driver that is polling.
 	*/
 	static void     cycle_trampoline(void *arg);
+
+       //++++++++++++++++++++++++
+	float _noise_filter(float x, int N);
+	//+++++++++++++++++++++++++
 
 private:
 	LidarLiteI2C(const LidarLiteI2C &copy) = delete;

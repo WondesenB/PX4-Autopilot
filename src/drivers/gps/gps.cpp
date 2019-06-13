@@ -636,6 +636,7 @@ GPS::run()
 	unsigned last_rate_count = 0;
 
 	/* loop handling received serial bytes and also configuring in between */
+	// PNU Drone loc: (35.233031, 129.084005)
 	while (!should_exit()) {
 
 		if (_fake_gps) {
@@ -643,6 +644,8 @@ GPS::run()
 			_report_gps_pos.timestamp = hrt_absolute_time();
 			_report_gps_pos.lat = (int32_t)47.378301e7f;
 			_report_gps_pos.lon = (int32_t)8.538777e7f;
+			//_report_gps_pos.lat = (int32_t)35.233031e7f;
+			//_report_gps_pos.lon = (int32_t)129.084005e7f;
 			_report_gps_pos.alt = (int32_t)1200e3f;
 			_report_gps_pos.alt_ellipsoid = 10000;
 			_report_gps_pos.s_variance_m_s = 0.5f;

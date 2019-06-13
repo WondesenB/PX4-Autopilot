@@ -433,23 +433,34 @@ Mission::set_mission_items()
 
 	work_item_type new_work_item_type = WORK_ITEM_TYPE_DEFAULT;
 
-	if (prepare_mission_items(&_mission_item, &mission_item_next_position, &has_next_position_item)) {
+
+	//**************************** read waypoint ****************************
+
+	if (prepare_mission_items(&_mission_item, &mission_item_next_position, &has_next_position_item)) 
+	{
 		/* if mission type changed, notify */
-		if (_mission_type != MISSION_TYPE_OFFBOARD) {
+		if (_mission_type != MISSION_TYPE_OFFBOARD) 
+		{
 			mavlink_log_info(_navigator->get_mavlink_log_pub(), "Executing mission.");
 			user_feedback_done = true;
 		}
 
 		_mission_type = MISSION_TYPE_OFFBOARD;
 
-	} else {
+	} 
+	else 
+	{
 		/* no mission available or mission finished, switch to loiter */
-		if (_mission_type != MISSION_TYPE_NONE) {
+		if (_mission_type != MISSION_TYPE_NONE) 
+		{
 
-			if (_navigator->get_land_detected()->landed) {
+			if (_navigator->get_land_detected()->landed) 
+			{
 				mavlink_log_info(_navigator->get_mavlink_log_pub(), "Mission finished, landed.");
 
-			} else {
+			} 
+			else 
+			{
 				/* https://en.wikipedia.org/wiki/Loiter_(aeronautics) */
 				mavlink_log_info(_navigator->get_mavlink_log_pub(), "Mission finished, loitering.");
 
@@ -1280,26 +1291,43 @@ Mission::read_mission_item(int offset, struct mission_item_s *mission_item)
 		/* read mission item to temp storage first to not overwrite current mission item if data damaged */
 		struct mission_item_s mission_item_tmp;
 
+
 		/* read mission item from datamanager */
-		if (dm_read(dm_item, *mission_index_ptr, &mission_item_tmp, len) != len) {
+
+		//***********************************************************
+		// code to read waypoint from file
+		//************************************************************
+
+		if (dm_read(dm_item, *mission_index_ptr, &mission_item_tmp, len) != len) 
+		
+		{
 			/* not supposed to happen unless the datamanager can't access the SD card, etc. */
 			mavlink_log_critical(_navigator->get_mavlink_log_pub(), "Waypoint could not be read.");
 			return false;
 		}
 
+                //*************************************************************
+		//
+		//************************************************************
+
+
 		/* check for DO_JUMP item, and whether it hasn't not already been repeated enough times */
-		if (mission_item_tmp.nav_cmd == NAV_CMD_DO_JUMP) {
+		if (mission_item_tmp.nav_cmd == NAV_CMD_DO_JUMP) 
+		{
 
 			/* do DO_JUMP as many times as requested */
-			if (mission_item_tmp.do_jump_current_count < mission_item_tmp.do_jump_repeat_count) {
+			if (mission_item_tmp.do_jump_current_count < mission_item_tmp.do_jump_repeat_count) 
+			{
 
 				/* only raise the repeat count if this is for the current mission item
 				 * but not for the read ahead mission item */
-				if (offset == 0) {
+				if (offset == 0) 
+				{
 					(mission_item_tmp.do_jump_current_count)++;
 
 					/* save repeat count */
-					if (dm_write(dm_item, *mission_index_ptr, DM_PERSIST_POWER_ON_RESET, &mission_item_tmp, len) != len) {
+					if (dm_write(dm_item, *mission_index_ptr, DM_PERSIST_POWER_ON_RESET, &mission_item_tmp, len) != len) 
+					{
 						/* not supposed to happen unless the datamanager can't access the dataman */
 						mavlink_log_critical(_navigator->get_mavlink_log_pub(), "DO JUMP waypoint could not be written.");
 						return false;

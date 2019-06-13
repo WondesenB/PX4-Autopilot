@@ -44,6 +44,7 @@ set(config_module_list
 	# Testing
 	#
 	drivers/distance_sensor/sf0x/sf0x_tests
+        
 	#drivers/test_ppm
 	lib/rc/rc_tests
 	modules/commander/commander_tests
@@ -72,6 +73,9 @@ set(config_module_list
 	modules/simulator
 	#modules/uavcan
 
+	#+++++++++
+    modules/obstacle_avoidance          
+    #+++++++++
 	#
 	# Estimation modules
 	#

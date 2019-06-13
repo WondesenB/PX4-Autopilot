@@ -76,7 +76,7 @@ using namespace DriverFramework;
 class DfTROneWrapper : public TROne
 {
 public:
-	DfTROneWrapper(uint8_t rotation = distance_sensor_s::ROTATION_DOWNWARD_FACING);
+	DfTROneWrapper(uint8_t rotation = distance_sensor_s::ROTATION_FORWARD_FACING);
 	~DfTROneWrapper();
 
 
@@ -274,10 +274,12 @@ probe()
 {
 	int ret;
 
-	if (g_dev == nullptr) {
-		ret = start(distance_sensor_s::ROTATION_DOWNWARD_FACING);
+	if (g_dev == nullptr) 
+	{
+		ret = start(distance_sensor_s::ROTATION_FORWARD_FACING);
 
-		if (ret) {
+		if (ret) 
+		{
 			PX4_ERR("Failed to start");
 			return ret;
 		}
@@ -285,7 +287,8 @@ probe()
 
 	ret = g_dev->probe();
 
-	if (ret) {
+	if (ret) 
+	{
 		PX4_ERR("Failed to probe");
 		return ret;
 	}
@@ -312,11 +315,13 @@ df_trone_wrapper_main(int argc, char *argv[])
 	int ret = 0;
 	int myoptind = 1;
 	const char *myoptarg = NULL;
-	uint8_t rotation = distance_sensor_s::ROTATION_DOWNWARD_FACING;
+	uint8_t rotation = distance_sensor_s::ROTATION_FORWARD_FACING;
 
 	/* jump over start/off/etc and look at options first */
-	while ((ch = px4_getopt(argc, argv, "R:", &myoptind, &myoptarg)) != EOF) {
-		switch (ch) {
+	while ((ch = px4_getopt(argc, argv, "R:", &myoptind, &myoptarg)) != EOF) 
+	{
+		switch (ch) 
+		{
 		case 'R':
 			rotation = (uint8_t)atoi(myoptarg);
 			PX4_INFO("Setting distance sensor orientation to %d", (int)rotation);
